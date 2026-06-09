@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: weekly-parent-report
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python codex-minutes-webapp/server.py
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: OPEN_BROWSER
+        value: "0"
+      - key: SKIP_CODEX_SKILL_CHECK
+        value: "1"
+      - key: CODEX_MINUTES_WORKSPACE
+        value: /opt/render/project/src
