@@ -41,7 +41,7 @@ QUESTION_COLUMNS = [
 ]
 
 VALID_RESULTS = {"O", "X", "△", "-"}
-VALID_CLINIC = {"참여", "미참여", "해당없음"}
+VALID_CLINIC = {"참여", "미참여"}
 VALID_COURSE_TYPES = {"내신", "정규"}
 VALID_MOCK_HOMEWORK = {"O", "X", "-"}
 
@@ -129,9 +129,9 @@ def normalize_clinic(value: Any) -> str:
     text = as_text(value)
     if text in {"O", "참", "출석", "참석", "참여함"}:
         return "참여"
-    if text in {"X", "불참", "미출석", "미참여함"}:
+    if text in {"", "-", "X", "불참", "미출석", "미참여함", "해당없음", "해당 없음"}:
         return "미참여"
-    return text if text in VALID_CLINIC else "해당없음"
+    return text if text in VALID_CLINIC else "미참여"
 
 
 def normalize_course_type(value: Any, default: str = "내신") -> str:
@@ -147,9 +147,9 @@ def normalize_mock_homework(value: Any) -> str:
     text = as_text(value).upper()
     if text in {"O", "○", "제출", "완료", "응시", "참여", "TRUE"}:
         return "O"
-    if text in {"X", "×", "미제출", "미응시", "불참", "FALSE"}:
+    if text in {"", "-", "X", "×", "미제출", "미응시", "불참", "FALSE", "해당없음", "해당 없음"}:
         return "X"
-    return text if text in VALID_MOCK_HOMEWORK else "-"
+    return text if text in VALID_MOCK_HOMEWORK else "X"
 
 
 def accuracy_by(items: list[dict[str, Any]], key: str) -> dict[str, float]:
@@ -253,13 +253,13 @@ def draft_comments(
         elif mock_homework.get("status") == "X":
             clinic_comment = "이번 주 모의고사 숙제가 미제출되었습니다. 다음 주에는 모의고사 풀이와 오답 정리를 우선 확인하겠습니다."
         else:
-            clinic_comment = "이번 주 모의고사 숙제 제출 여부는 별도 확인이 필요합니다."
+            clinic_comment = "이번 주 모의고사 숙제가 미제출되었습니다. 다음 주에는 모의고사 풀이와 오답 정리를 우선 확인하겠습니다."
     elif clinic == "참여":
         clinic_comment = "이번 주 클리닉에 참여하여 오답 보완 기회를 확보했습니다."
     elif clinic == "미참여":
         clinic_comment = "이번 주 클리닉 미참여로 오답 보완 기회가 부족했습니다. 다음 주에는 클리닉 참여를 권장합니다."
     else:
-        clinic_comment = "이번 주 클리닉 참여 대상 여부는 별도 확인이 필요합니다."
+        clinic_comment = "이번 주 클리닉 미참여로 오답 보완 기회가 부족했습니다. 다음 주에는 클리닉 참여를 권장합니다."
 
     if teacher_memo:
         next_action += f" 담당 메모를 반영해 {teacher_memo} 부분을 함께 점검하겠습니다."

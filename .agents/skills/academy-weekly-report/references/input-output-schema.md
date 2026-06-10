@@ -34,8 +34,8 @@ Student-level input. One row per student.
 | 숙제1_수행률 | yes | number | 0 to 100 |
 | 숙제2_제목 | yes | string | assignment title |
 | 숙제2_수행률 | yes | number | 0 to 100 |
-| 클리닉참여 | yes | enum | 참여 / 미참여 / 해당없음 |
-| 모의고사숙제 | conditional | enum | 정규 mode only: O / X / -. Ignored in 내신 mode |
+| 클리닉참여 | yes | enum | 참여 / 미참여. Blank, `-`, and old `해당없음` values are normalized to 미참여 |
+| 모의고사숙제 | conditional | enum | 정규 mode only: O / X. Blank, `-`, and old `해당없음` values are normalized to X / 미참여. Ignored in 내신 mode |
 | 모의고사점수 | no | number/string | 정규 mode only: optional score. Ignored in 내신 mode |
 | 모의고사등급 | no | number/string | 정규 mode only: optional grade. Ignored in 내신 mode |
 | 교사메모 | no | string | reference for comments |

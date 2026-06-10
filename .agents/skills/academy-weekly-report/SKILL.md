@@ -95,8 +95,8 @@ Value rules:
 
 - Homework rates are numbers from `0` to `100`, without `%`.
 - `수업유형`: `내신`, `정규`. The app's selected mode (`--course-type`) is authoritative; this column is kept for template readability and future filtering only.
-- `클리닉참여`: `참여`, `미참여`, `해당없음`.
-- `모의고사숙제`: `O`, `X`, `-`. Used only when the selected report mode is `정규`; ignored in `내신` mode even if values are present.
+- `클리닉참여`: `참여`, `미참여`. Blank, `-`, or old `해당없음` values are treated as `미참여`.
+- `모의고사숙제`: `O`, `X`. Blank, `-`, or old `해당없음` values are treated as `X`/`미참여`. Used only when the selected report mode is `정규`; ignored in `내신` mode even if values are present.
 - `모의고사점수`, `모의고사등급`: optional; in `정규` mode, display as `점수(등급)` when `모의고사숙제=O`. Ignored in `내신` mode.
 - `정오`: `O`, `X`, `△`, `-`.
 - Recommended `영역`: `독해`, `문학`, `문법`, `어휘`, `쓰기`, `기타`.
@@ -142,13 +142,11 @@ Mention clinic participation when useful:
 
 - `참여`: "이번 주 클리닉에 참여하여 오답 보완 기회를 확보했습니다."
 - `미참여`: "이번 주 클리닉 미참여로 오답 보완 기회가 부족했습니다."
-- `해당없음`: omit or write neutral guidance.
 
 For `정규` reports, use the clinic slot as a compact `모의고사 숙제` section instead:
 
 - `O`: show O and include score/grade if present.
 - `X`: show X and guide mock-exam completion/review.
-- `-`: show neutral confirmation-needed guidance.
 
 Use `교사메모` as feedback guidance, not as part of the overall evaluation summary:
 

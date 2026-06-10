@@ -1933,7 +1933,6 @@
               <option value="">클리닉 전체</option>
               <option>참여</option>
               <option>미참여</option>
-              <option>해당없음</option>
             </select>
             <select id="sortFilter">
               <option value="original">업로드 순</option>
@@ -2333,8 +2332,9 @@
         const domainEntries = Object.entries(metrics.domainAccuracy || {});
         const allQuestions = student.questions || [];
         const questions = allQuestions.slice(0, 22);
-        const clinicNo = metrics.clinicParticipation === "미참여";
-        const clinicSymbol = clinicParticipationSymbol(metrics.clinicParticipation);
+        const clinicLabel = clinicParticipationLabel(metrics.clinicParticipation);
+        const clinicNo = clinicLabel === "미참여";
+        const clinicSymbol = clinicParticipationSymbol(clinicLabel);
         const courseType = metrics.courseType || meta.courseType || "내신";
         const isRegularCourse = courseType === "정규";
         const statusInitial = student.analysis.overallStatus?.includes("집중") ? "D" : student.analysis.overallStatus?.includes("관리") ? "C" : student.analysis.overallStatus?.includes("보통") ? "B" : "A";
@@ -2422,7 +2422,7 @@
                   <h2>클리닉 참여</h2>
                   <div class="clinic-strip">
                     <span class="clinic-state">
-                      <span class="clinic-mark ${clinicNo ? "no" : ""}">${escapeHtml(metrics.clinicParticipation)}</span>
+                      <span class="clinic-mark ${clinicNo ? "no" : ""}">${escapeHtml(clinicLabel)}</span>
                       <span class="clinic-symbol">${clinicSymbol}</span>
                     </span>
                     <span>${escapeHtml(comments.clinicComment)}</span>
@@ -2547,25 +2547,28 @@
       }
 
       function clinicParticipationSymbol(value) {
-        if (value === "참여") return "O";
-        if (value === "미참여") return "X";
-        return "-";
+        return clinicParticipationLabel(value) === "참여" ? "O" : "X";
+      }
+
+      function clinicParticipationLabel(value) {
+        return value === "참여" ? "참여" : "미참여";
       }
 
       function mockExamHomeworkSection(metrics, comments) {
         const mock = metrics.mockExamHomework || {};
-        const status = mock.status || "-";
+        const status = mock.status || "X";
         const scoreText = mock.score ? `${escapeHtml(mock.score)}점` : "";
         const gradeText = mock.grade ? `${escapeHtml(mock.grade)}등급` : "";
         const detail = scoreText && gradeText ? `${scoreText}(${gradeText})` : scoreText || gradeText;
-        const mockLabel = status === "O" && detail ? detail : status === "O" ? "참여" : status === "X" ? "미참여" : "해당없음";
+        const mockLabel = status === "O" && detail ? detail : status === "O" ? "참여" : "미참여";
+        const clinicLabel = clinicParticipationLabel(metrics.clinicParticipation);
         return `
           <div class="split-mini-sections">
             <section class="concept-section">
               <h2>클리닉</h2>
               <div class="clinic-strip mock-exam">
                 <span class="mock-pair">
-                  <span class="mock-value">${escapeHtml(metrics.clinicParticipation)}</span>
+                  <span class="mock-value">${escapeHtml(clinicLabel)}</span>
                 </span>
               </div>
             </section>
