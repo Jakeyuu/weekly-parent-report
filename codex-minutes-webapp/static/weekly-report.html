@@ -1818,7 +1818,7 @@
       <div class="header-inner">
         <button class="app-brand" id="homeRefreshBtn" type="button" aria-label="처음 화면 새로고침">
           <img class="app-brand-logo" src="/static/assets/narusya-logo-mark.png" alt="학원 로고" />
-          <h1>정승효 국어학원</h1>
+          <h1>정승효 국어연구소</h1>
         </button>
         <div class="page-title">주간 학부모 리포트</div>
         <div class="header-actions">
@@ -1979,7 +1979,7 @@
             <textarea id="commentWeakness"></textarea>
           </div>
           <div class="field">
-            <label>다음 학습 방향</label>
+            <label>학습 방향</label>
             <textarea id="commentNext"></textarea>
           </div>
           <div class="field">
@@ -2383,7 +2383,7 @@
               </section>
 
               <section class="concept-section">
-                <h2>진단평가 비교</h2>
+                <h2>진단평가 결과</h2>
                 <div class="concept-body">
                   ${conceptBarRow("학생", metrics.accuracy, `${metrics.score}개`, "red")}
                   ${conceptBarRow("반평균", metrics.classAverageAccuracy, `${metrics.classAverageScore}개`, "blue")}
@@ -2442,7 +2442,7 @@
                         <th>결과</th>
                         <th>영역</th>
                         <th>난이도</th>
-                        <th>보완 포인트</th>
+                        <th>출제 영역</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -2465,7 +2465,7 @@
                 <div class="concept-body feedback">
                   <div class="note"><strong>잘한 점</strong><span>${escapeHtml(comments.strength)}</span></div>
                   <div class="note"><strong>보완할 점</strong><span>${escapeHtml(comments.weakness)}</span></div>
-                  <div class="note"><strong>다음 학습 방향</strong><span>${escapeHtml(comments.nextAction)}</span></div>
+                  <div class="note"><strong>학습 방향</strong><span>${escapeHtml(comments.nextAction)}</span></div>
                   <div class="note"><strong>가정 안내</strong><span>${escapeHtml(comments.homeGuide)}</span></div>
                 </div>
               </section>
