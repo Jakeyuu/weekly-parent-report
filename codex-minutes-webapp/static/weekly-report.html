@@ -78,6 +78,20 @@
         align-items: center;
         gap: 10px;
         min-width: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        padding: 0;
+        cursor: pointer;
+        font: inherit;
+        text-align: left;
+        appearance: none;
+      }
+
+      .app-brand:focus-visible {
+        outline: 3px solid rgba(37, 99, 235, 0.35);
+        outline-offset: 4px;
+        border-radius: 8px;
       }
 
       .app-brand-logo {
@@ -1802,10 +1816,10 @@
   <body>
     <header class="app-header">
       <div class="header-inner">
-        <div class="app-brand">
+        <button class="app-brand" id="homeRefreshBtn" type="button" aria-label="처음 화면 새로고침">
           <img class="app-brand-logo" src="/static/assets/narusya-logo-mark.png" alt="학원 로고" />
           <h1>정승효 국어학원</h1>
-        </div>
+        </button>
         <div class="page-title">주간 학부모 리포트</div>
         <div class="header-actions">
           <a href="/api/weekly/download-template"><button>입력 양식 다운로드</button></a>
@@ -2794,6 +2808,8 @@
         XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), "주간요약");
         XLSX.writeFile(wb, `${safeName(state.analysis.metadata.period)}_주간결과.xlsx`);
       }
+
+      $("homeRefreshBtn").addEventListener("click", () => window.location.reload());
 
       $("analyzeBtn").addEventListener("click", async () => {
         const file = $("file").files[0];
